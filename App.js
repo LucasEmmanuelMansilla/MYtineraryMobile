@@ -1,21 +1,49 @@
+import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Button, RefreshControl, View, TouchableOpacity } from 'react-native';
+import { Home } from './screens/Home';
+import Cities from './screens/Cities';
+import { Provider } from 'react-redux';
+import store from './redux/reducers/rootReducer';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import Login from './screens/Login';
+import { createDrawerNavigator } from '@react-navigation/drawer'
+import Register from './screens/Register';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+
+const App = () => {
+
+  const Stack = createStackNavigator()
+  const Drawer = createDrawerNavigator()
+
+  const ScreenCities = () => (
+    <Stack.Navigator screenOptions={
+      {headerShown: false}
+    }>
+      <Stack.Screen name="Cities" component={Cities} />
+      {/* <Stack.Screen name='City' component={City} /> */}
+    </Stack.Navigator>
+  )
+
+  return(
+    <Provider store={store}>  
+      <View style={{height: 30}}>
+
+      </View>
+      <NavigationContainer>
+        <Drawer.Navigator>      
+            <Drawer.Screen name="Home" component={Home} />
+            <Drawer.Screen name="Cities" children={ScreenCities} /> 
+            <Drawer.Screen name="Login" component={Login} />
+            <Drawer.Screen name="Register" component={Register} />             
+        </Drawer.Navigator>
+      </NavigationContainer>   
+    </Provider>
+      )
 }
+  
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+export default App
