@@ -10,17 +10,16 @@ const Cities = (props) => {
     useEffect(() => {
         props.getCities()
     },[] )
-  
+
    
     return (
         <ScrollView>
         <View>
-            <Text style={{textAlign: 'center', marginBottom: 20, marginTop: 20}} >CITIES</Text>
               {props.cities.map(({name, url, _id}) =>                          
                         <View key={_id} style={styles.cities}>      
-                            <TouchableHighlight style={{width: '100%'}}>                            
-                                <ImageBackground source={{uri: `${url}`}} style={styles.image} >
-                                    <Text style={{textAlign: 'center', fontSize: 25, width: '100%', backgroundColor: 'hsla(221, 93%, 17%, 0.53)', color: 'white'}}>{name}</Text>         
+                            <TouchableHighlight style={{width: '100%'}} onPress={() => props.navigation.navigate('City', {idCity: _id})}>                            
+                                <ImageBackground source={{uri: url}} style={styles.image} >
+                                    <Text style={styles.titlePortada}>{name}</Text>         
                                 </ImageBackground> 
                             </TouchableHighlight>                    
                         </View>

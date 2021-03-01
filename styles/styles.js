@@ -1,9 +1,7 @@
 
 import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
-
     //ESTILOS DE HOME
-
     header: {
         height: '10%'
     },
@@ -80,17 +78,36 @@ export const styles = StyleSheet.create({
     },
     //INPUTS LOGIN
     input: {
-        width: '50%',
+        width: '80%',
         backgroundColor: 'hsla(194, 25%, 100%, 0.50)',
         marginBottom: 10,
         height: 50,
-        textAlign: 'center'
+        textAlign: 'center',
+        borderRadius: 15
     },
     btnLogin: {
+        borderRadius: 10,
         backgroundColor: 'white',
         width: '50%',
         justifyContent: 'center',
         alignItems: 'center',
-        height: 35
+        height: 45
+    },
+    //CITY INDIVIDUAL
+    cityPortada: {
+        width: '100%',
+        height: 300,
+        alignItems: 'center',
+        justifyContent: 'center',
+
+    },
+    titlePortada: {
+        textAlign: 
+        'center', 
+        fontSize: 25,
+         width: '100%', 
+         backgroundColor: 
+         'hsla(221, 93%, 17%, 0.53)', 
+         color: 'white'
     }
 })
