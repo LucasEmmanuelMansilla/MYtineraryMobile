@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
-import { View, Text, ImageBackground, StyleSheet, Image, TouchableHighlight, ActivityIndicatorComponent } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react'
+import { View, Text, ImageBackground, TouchableHighlight, ActivityIndicator } from 'react-native';
+import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import citiesActions from '../redux/actions/citiesActions';
 import {styles} from '../styles/styles'
@@ -11,11 +11,13 @@ const Cities = (props) => {
         props.getCities()
     },[] )
 
-   
+  
+
     return (
         <ScrollView>
         <View>
-              {props.cities ? props.cities.map(({name, url, _id}) =>                          
+            <TextInput onChangeText={(value) => props.filterCities(value)} style={{textAlign: 'center', height: 40, margin: 10, borderWidth: 1, borderRadius: 15}} placeholder="Search city..." />
+              {props.cities ? props.filteredCities.length ? props.filteredCities.map(({name, url, _id}) =>                          
                         <View key={_id} style={styles.cities}>      
                             <TouchableHighlight style={{width: '100%'}} onPress={() => props.navigation.navigate('City', {idCity: _id})}>                            
                                 <ImageBackground source={{uri: url}} style={styles.image} >
@@ -23,9 +25,17 @@ const Cities = (props) => {
                                 </ImageBackground> 
                             </TouchableHighlight>                    
                         </View>
-                        )                 
+                        )   :     
+                        props.cities.map(({name, url, _id}) =>                          
+                        <View key={_id} style={styles.cities}>      
+                            <TouchableHighlight style={{width: '100%'}} onPress={() => props.navigation.navigate('City', {idCity: _id})}>                            
+                                <ImageBackground source={{uri: url}} style={styles.image} >
+                                    <Text style={styles.titlePortada}>{name}</Text>         
+                                </ImageBackground> 
+                            </TouchableHighlight>                    
+                        </View>  )        
                     :
-                    <ActivityIndicatorComponent />} 
+                    <ActivityIndicator />} 
         </View>
         </ScrollView>
     )
@@ -34,12 +44,14 @@ const Cities = (props) => {
 
 const mapStateToProps = (state) =>  {
     return {
-        cities: state.citiesR.cities
+        cities: state.citiesR.cities,
+        filteredCities: state.citiesR.citiesFiltradas
     }
 }
 
 const mapDispatchToProps = {
-    getCities: citiesActions.getCities
+    getCities: citiesActions.getCities,
+    filterCities: citiesActions.filterCities
 }
 
 
