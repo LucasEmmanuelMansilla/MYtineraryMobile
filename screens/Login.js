@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { ImageBackground, Text, View } from 'react-native'
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
+import { ImageBackground, Text, View, Keyboard } from 'react-native'
+import { TextInput, TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { connect } from 'react-redux';
 import userActions from '../redux/actions/userActions';
 import { styles } from './../styles/styles';
+import  AsyncStorage  from '@react-native-async-storage/async-storage';
 
 const Login = (props) => {
     const [user, setUser] = useState({userName: '', password: ''})
@@ -19,38 +20,41 @@ const Login = (props) => {
         }
         setError([])
         const respuesta = await props.loginUser(user)
+      
          
         if(respuesta && !respuesta.success){
             setError(respuesta.respuesta)
         }else{ 
-            alert(`Welcome`)
+            alert(`Welcome to MYtinerary`)
     
         }
     }
 
     return (
-        <ImageBackground source={image} style={{width: '100%', height: '100%'}}>
-            <View style={{width: '100%', justifyContent: 'space-around', alignItems: 'center', flex: 1}}>
-                <View style={{width: '100%', justifyContent: 'center', alignItems: 'center', flex: 1}}>
-                    <TextInput keyboardType='email-address' style={styles.input} name="username" placeholder="Enter your mail" onChangeText={(value) => setUser({...user, userName: value.trim() })} />
-                    <TextInput secureTextEntry autoCorrect={false} style={styles.input} name="password" placeholder="Enter your password" onChangeText={(value) => setUser({...user, password: value.trim()})} />
-                    <View style={styles.btnLogin}>
-                        <TouchableOpacity >
-                            <Text onPress={() => loguearUsuario()}>Login</Text>
-                        </TouchableOpacity>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+            <ImageBackground source={image} style={{width: '100%', height: '100%'}}>
+                <View style={{width: '100%', justifyContent: 'space-around', alignItems: 'center', flex: 1}}>
+                    <View style={{width: '100%', justifyContent: 'center', alignItems: 'center', flex: 1}}>
+                        <TextInput keyboardType='email-address' style={styles.input} name="username" placeholder="Enter your mail" onChangeText={(value) => setUser({...user, userName: value.trim() })} />
+                        <TextInput secureTextEntry autoCorrect={false} style={styles.input} name="password" placeholder="Enter your password" onChangeText={(value) => setUser({...user, password: value.trim()})} />
+                        <View style={styles.btnLogin}>
+                            <TouchableOpacity >
+                                <Text onPress={() => loguearUsuario()}>Login</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>                         
+                    <View style={{alignItems: 'center', width: '100%', marginBottom: '10%'}}>
+                        <Text style={{fontSize: 15, fontWeight: 'bold', color: 'white', marginBottom: '5%'}}>Don't have account? Create one here!</Text>
+                        <View style={styles.btnLogin}>
+                            <TouchableOpacity onPress={() => props.navigation.navigate("Register")} >
+                                <Text>Register</Text>
+                            </TouchableOpacity>
+                        </View>                
                     </View>
-                </View>                         
-                <View style={{alignItems: 'center', width: '100%', marginBottom: '10%'}}>
-                    <Text style={{fontSize: 15, fontWeight: 'bold', color: 'white', marginBottom: '5%'}}>Don't have account? Create one here!</Text>
-                    <View style={styles.btnLogin}>
-                        <TouchableOpacity >
-                            <Text>Register</Text>
-                        </TouchableOpacity>
-                    </View>                
+                    <Text>{error}</Text>
                 </View>
-                <Text>{error}</Text>
-            </View>
-        </ImageBackground>
+            </ImageBackground>
+        </TouchableWithoutFeedback>
     )
 }
 const mapDispatchToProps = {

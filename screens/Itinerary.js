@@ -1,14 +1,28 @@
 import React from 'react';
-import { Image, Text, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Image, Text, View, TouchableHighlight } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons'
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 import Activities from './Activities';
+import { connect } from 'react-redux';
+import itinerariesActios from '../redux/actions/itinerariesActions';
 
 const Itinerary = (props) =>{
-    const {itineraryTitle, hashtag, hours, likes, photoUser, price, userItinerary, activities, comments, _id} = props
+    const {itineraryTitle, hashtag, hours, likes, photoUser, price, userItinerary, activities, comments, _id, loggedUser} = props
 
+
+    const likear = async () => {
+        like({itineraryId: _id, token: loggedUser.token,
+        id})
+    }
+
+    const dislikear = async () => {
+        dislike({
+            itineraryId: _id, token: loggedUser.token, 
+            token: loggedUser.token,
+        id})
+    }
 
     return (     
         <ScrollView style={{padding: 10}}>
@@ -20,9 +34,27 @@ const Itinerary = (props) =>{
                         <Text style={{fontSize: 15}}>{userItinerary}</Text>
                     </View>
                     <View style={{marginLeft: '5%', width: '100%'}}>
-                        {hashtag.map(tag => <Text style={{color: 'blue'}}>{tag}</Text>)}
-                        <Text>Hours: {hours}</Text>
-                        <Text><FontAwesomeIcon icon={faThumbsUp} style={{color: 'black'}} /> {likes.length}</Text>
+                        {hashtag.map(tag => <Text style={{color: 'black',}}>{tag}</Text>)}
+                        <Text style={{marginVertical: 5}}>Hours: {hours}</Text>
+                        <View>{
+                        // loggedUser ? 
+                        // likes.find(likeUser => likeUser === loggedUser._id ? 
+                        //     <TouchableOpacity onPress={() => likear()}>
+                        //         <Text>
+                        //             <FontAwesomeIcon icon={faThumbsUp} style={{color: 'red'}} /><Text>{likes.length}</Text>
+                        //         </Text>
+                        //     </TouchableOpacity> : 
+                        //     <TouchableOpacity onPress={() => dislikear()}>
+                        //         <Text>
+                        //             <FontAwesomeIcon icon={faThumbsUp} style={{color: 'black'}} /><Text>{likes.length}</Text>
+                        //         </Text>
+                        //     </TouchableOpacity> ) :
+                            <TouchableOpacity onPress={() => alert("Functionality under development")}>
+                                <Text>
+                                    <FontAwesomeIcon icon={faThumbsUp} style={{color: 'black'}} /><Text>{likes.length}</Text>
+                                </Text>
+                            </TouchableOpacity> }
+                        </View>          
                         <View style={{flexDirection: 'row'}}>{Array(price).fill(                    
                             <FontAwesomeIcon icon={faMoneyBillAlt} style={{color: 'green', width: '100%', marginRight: '3%', marginTop: '3%' }} />)}
                         </View>            
@@ -34,4 +66,14 @@ const Itinerary = (props) =>{
     ) }   
 ;
 
-export default Itinerary;
+const mapStateToProps = state => {
+    return {
+        loggedUser: state.usersR.loggedUser
+    }
+}
+
+const mapDispatchToProps = {
+    like: itinerariesActios.likeItinerary,
+    dislike: itinerariesActios.dislikeItinerary
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Itinerary)

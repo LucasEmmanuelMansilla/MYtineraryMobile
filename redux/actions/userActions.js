@@ -44,9 +44,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
                 dispatch({type: 'LOG_USER', payload: respuesta.data.respuesta})
             }catch(error){
                 //SI EL TOKEN NO COINCIDE DEVUELVE UN ERROR AL FRONT Y UN RETURN FALSE, PARA QUE LA VARIABLE "RECARGA" DE APP ACTUALICE SU ESTADO
-                if(error.response.status === 401){
-                  Alert.alert('Acción no autorizada')
-                }
                 AsyncStorage.clear()
                 return false
             

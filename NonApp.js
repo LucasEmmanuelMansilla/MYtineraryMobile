@@ -1,7 +1,5 @@
 import 'react-native-gesture-handler';
-import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { Button, View } from 'react-native';
 import { Home } from './screens/Home';
 import Cities from './screens/Cities';
 import { connect } from 'react-redux';
@@ -47,6 +45,30 @@ const NonApp = (props) => {
     </Stack.Navigator>
   )
   
+  const ScreenLogin = (props) => (
+    <Stack.Navigator screenOptions={
+      {
+      headerLeft: () =>(
+          <TouchableOpacity padding transparent marginHorizontal onPress={() => props.navigation.openDrawer()}>
+              <Feather name="menu" size={30}/>
+          </TouchableOpacity>)}
+    }>
+        <Stack.Screen name="Login" component={Login} />
+    </Stack.Navigator>
+  )
+  
+  const ScreenRegister = (props) => (
+    <Stack.Navigator screenOptions={
+      {
+      headerLeft: () =>(
+          <TouchableOpacity padding transparent marginHorizontal onPress={() => props.navigation.openDrawer()}>
+              <Feather name="menu" size={30}/>
+          </TouchableOpacity>)}
+    }>
+        <Stack.Screen name="Register" component={Register} />
+    </Stack.Navigator>
+  )
+  
   const { logout } = props
   
   function CustomDrawerContent(props) {
@@ -82,8 +104,8 @@ const NonApp = (props) => {
        <Drawer.Navigator>          
             <Drawer.Screen name="Home" children={ScreenHome} /> 
             <Drawer.Screen name="Cities" children={ScreenCities}  />
-            <Drawer.Screen name="Login" component={Login} />
-            <Drawer.Screen name="Register" component={Register} />           
+            <Drawer.Screen name="Login" children={ScreenLogin} />
+            <Drawer.Screen name="Register" children={ScreenRegister} />           
         </Drawer.Navigator> : 
         <Drawer.Navigator  drawerContent={props => <CustomDrawerContent {...props  }/> }>     
           <Drawer.Screen name="Home" children={ScreenHome} />        

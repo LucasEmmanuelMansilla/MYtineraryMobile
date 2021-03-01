@@ -17,7 +17,6 @@ export const Home =  (props) => {
                         <ImageBackground source={image} style={styles.portada} >
                             <View style={styles.home}>
                                 <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 150}}>
-                                    <Image source={logo} resizeMode='contain'  style={{width: '15%' }} />
                                     <Text style={styles.title}>MYtinerary</Text> 
                                 </View>                                                         
                                 <View style={styles.boton}>

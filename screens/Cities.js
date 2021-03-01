@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Text, ImageBackground, StyleSheet, Image, TouchableHighlight } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet, Image, TouchableHighlight, ActivityIndicatorComponent } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import citiesActions from '../redux/actions/citiesActions';
@@ -15,7 +15,7 @@ const Cities = (props) => {
     return (
         <ScrollView>
         <View>
-              {props.cities.map(({name, url, _id}) =>                          
+              {props.cities ? props.cities.map(({name, url, _id}) =>                          
                         <View key={_id} style={styles.cities}>      
                             <TouchableHighlight style={{width: '100%'}} onPress={() => props.navigation.navigate('City', {idCity: _id})}>                            
                                 <ImageBackground source={{uri: url}} style={styles.image} >
@@ -24,7 +24,8 @@ const Cities = (props) => {
                             </TouchableHighlight>                    
                         </View>
                         )                 
-                    } 
+                    :
+                    <ActivityIndicatorComponent />} 
         </View>
         </ScrollView>
     )

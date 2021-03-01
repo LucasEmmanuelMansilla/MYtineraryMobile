@@ -18,7 +18,10 @@ const Itineraries = (props) => {
             {itineraries.length > 0 ? <View>
                 {itineraries.map(({itineraryTitle, hashtag, hours, likes, photoUser, price, userItinerary, activities, comments, _id}) => <Itinerary itineraryTitle={itineraryTitle} hashtag={hashtag} hours={hours} likes={likes} photoUser={photoUser} price={price}  userItinerary={userItinerary} activities={activities} comments={comments} _id={_id} />)}
             </View> : 
-            <Text>No hay nada</Text> }           
+            <View style={{width: '100%', height: 250, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(16, 211, 218, 0.349)', marginTop: 30}}>
+                <Text style={{fontSize: 19}} >City ​​without itineraries yet. Create yours!</Text> 
+            </View>
+            }           
         </ScrollView>
     )
     
